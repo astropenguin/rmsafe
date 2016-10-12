@@ -40,9 +40,9 @@ def listpaths(pathnames):
 
     for p in pathnames:
         matched = glob.glob(p)
-        if len(matched) > 0:
-            filenames += matched
-        else:
+        filenames += matched
+        
+        if len(matched) == 0:
             print('{}: file or directory does not exist.'.format(p))
 
     filepaths = map(os.path.abspath, filenames)
@@ -51,8 +51,10 @@ def listpaths(pathnames):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='macos-trash', description=__doc__)
-    parser.add_argument('pathnames', metavar='path', nargs='*',
-        help='pathname pattern of file or directory (e.g. spam.txt, *.pdf)')
+    parser.add_argument(
+        'pathnames', metavar='path', nargs='*',
+        help='pathname pattern of file or directory (e.g. spam.txt, *.pdf)'
+    )
 
     args = parser.parse_args()
     pathnames = args.pathnames
