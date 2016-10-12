@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+'''
+move files and/or directories to macOS Trash
+'''
+
+import os
+import sys
+import glob
+import argparse
+from subprocess import Popen, PIPE
+
+
+applescript =\
+'''
+on run argv
+    set filepaths to {}
+
+    repeat with f in argv
+        set end of filepaths to (f as POSIX file)
+    end repeat
+
+    tell application "Finder"
+        delete filepaths
+    end tell
+end run
+'''
+
+def listpaths(pathnames):
+    '''Return full paths of files and/or directories from pathnames
+    
+    Args:
+    - pathnames (list of str): pathname patterns (e.g. ['spam.txt', '*.pdf'])
+    
+    Returns:
+    - filepaths (list of str): full paths of matched files and/or directories
+    '''
+    filenames = []
+
+    for p in pathnames:
+        matched = glob.glob(p)
+        if len(matched) > 0:
+            filenames += matched
+        else:
+            print('{}: file or directory does not exist.'.format(p))
+
+    filepaths = map(os.path.abspath, filenames)
+    return filepaths
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(prog='macos-trash', description=__doc__)
+    parser.add_argument('pathnames', metavar='path', nargs='*',
+        help='pathname pattern of file or directory (e.g. spam.txt, *.pdf)')
+
+    args = parser.parse_args()
+    pathnames = args.pathnames
+    filepaths = listpaths(pathnames)
+
+    if len(pathnames) == 0:
+        parser.print_help()
+        sys.exit()
+    
+    proc = Popen(['osascript', '-'] + filepaths, stdin=PIPE, stdout=PIPE)
+    proc.communicate(applescript)
