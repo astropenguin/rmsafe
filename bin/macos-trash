@@ -36,16 +36,15 @@ def listpaths(pathnames):
     Returns:
     - filepaths (list of str): full paths of matched files and/or directories
     '''
-    filenames = []
+    filepaths = []
 
     for p in pathnames:
         matched = glob.glob(p)
-        filenames += matched
+        filepaths += map(os.path.abspath, matched)
         
         if len(matched) == 0:
             print('{}: file or directory does not exist.'.format(p))
 
-    filepaths = map(os.path.abspath, filenames)
     return filepaths
 
 
