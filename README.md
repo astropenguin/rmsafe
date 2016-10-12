@@ -12,6 +12,8 @@ It executes AppleScript's `delete` command so that the trashed things can be *pu
 
 ## Installation
 
+### Homebrew
+
 ```bash
 $ brew tap snoopython/macos
 $ brew install macos-trash
