@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding: utf-8
 
-'''usage: macos-trash [-h --help] [path [path ...]]
+'''usage: macos-trash [-h] [path [path ...]]
 
 move files and/or directories to macOS Trash'''
 
