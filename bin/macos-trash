@@ -4,6 +4,7 @@
 'usage: macos-trash [-h] [path [path ...]]'
 
 import os
+import re
 import sys
 import glob
 from subprocess import Popen, PIPE
@@ -52,7 +53,7 @@ if __name__ == '__main__':
         print(__doc__)
         sys.exit()
 
-    elif '-' in args[0]:
+    if re.search('^-+', args[0]):
         if args[0] in ['-h', '--help']:
             print(__doc__)
         else:
