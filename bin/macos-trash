@@ -51,8 +51,13 @@ if __name__ == '__main__':
     if len(args) == 0:
         print(__doc__)
         sys.exit()
-    elif args[0] in ['-h', '--help']:
-        print(__doc__)
+
+    elif '-' in args[0]:
+        if args[0] in ['-h', '--help']:
+            print(__doc__)
+        else:
+            print('{}: illegal option'.format(args[0]))
+
         sys.exit()
 
     filepaths = listpaths(args)
