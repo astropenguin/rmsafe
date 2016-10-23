@@ -1,14 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 # coding: utf-8
 
-'''
-move files and/or directories to macOS Trash
-'''
+'''usage: macos-trash [-h --help] [path [path ...]]
+
+move files and/or directories to macOS Trash'''
 
 import os
 import sys
 import glob
-import argparse
 from subprocess import Popen, PIPE
 
 
@@ -49,19 +48,15 @@ def listpaths(pathnames):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(prog='macos-trash', description=__doc__)
-    parser.add_argument(
-        'pathnames', metavar='path', nargs='*',
-        help='pathname pattern of file or directory (e.g. spam.txt, *.pdf)'
-    )
+    args = sys.argv[1:]
 
-    args = parser.parse_args()
-    pathnames = args.pathnames
-    filepaths = listpaths(pathnames)
-
-    if len(pathnames) == 0:
-        parser.print_help()
+    if len(args) == 0:
+        print(__doc__)
         sys.exit()
-    
-    proc = Popen(['osascript', '-'] + filepaths, stdin=PIPE, stdout=PIPE)
+    elif args[0] in ['-h', '--help']:
+        print(__doc__)
+        sys.exit()
+
+    filepaths = listpaths(args)
+    proc = Popen(['osascript', '-'] + filepaths, stdin=PIPE, stdout=PIPE, stderr=PIPE)
     proc.communicate(applescript)
