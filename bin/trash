@@ -1,0 +1,60 @@
+#!/usr/bin/python
+# coding: utf-8
+
+from argparse import ArgumentParser
+from glob import glob
+from os.path import abspath, expanduser
+from subprocess import Popen, PIPE
+from sys import exit
+
+
+applescript =\
+'''
+on run argv
+    set filepaths to {}
+
+    repeat with f in argv
+        set end of filepaths to (f as POSIX file)
+    end repeat
+
+    tell application "Finder"
+        delete filepaths
+    end tell
+end run
+'''
+
+def listpaths(pathnames):
+    '''Return full paths of files and/or directories from pathnames
+    
+    Args:
+    - pathnames (list of str): pathname patterns (e.g. ['spam.txt', '*.pdf'])
+    
+    Returns:
+    - filepaths (list of str): full paths of matched files and/or directories
+    '''
+    filepaths = []
+
+    for p in pathnames:
+        matched = glob(abspath(expanduser(p)))
+
+        if len(matched) == 0:
+            print('{}: file or directory does not exist.'.format(p))
+        else:
+            filepaths += matched
+
+    return filepaths
+
+
+if __name__ == '__main__':
+    parser = ArgumentParser()
+    parser.add_argument('pathnames', metavar='path', nargs='*',
+                        help='pathname pattern of file or directory')
+
+    pathnames = parser.parse_args().pathnames
+    if len(pathnames) == 0:
+        parser.print_help()
+        exit()
+
+    filepaths = listpaths(pathnames)
+    proc = Popen(['osascript', '-'] + filepaths, stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    proc.communicate(applescript)
