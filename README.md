@@ -1,6 +1,6 @@
 # trash
 
-trash is a simple Python tool to move files and/or directories to macOS Trash.
+A simple Python tool to move files and/or directories to macOS Trash.
 
 ## Usage
 
