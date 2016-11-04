@@ -1,13 +1,12 @@
-# macos-trash
+# trash
 
-macos-trash is a Python tool to move files and/or directories to macOS Trash.
-It executes AppleScript's `delete` command so that the trashed things can be *put back*.
+trash is a simple Python tool to move files and/or directories to macOS Trash.
 
 ## Usage
 
-`$ macos-trash [-h] [path [path ...]]`
+`$ trash [-h] [path [path ...]]`
 
-+ `path`: pathname pattern of file or directory (e.g. spam.txt, *.pdf)
++ `path`: pathname pattern of file or directory (e.g. *.pdf)
 + `-h`, `--help`: show this help message and exit
 
 ## Installation
@@ -16,10 +15,15 @@ It executes AppleScript's `delete` command so that the trashed things can be *pu
 
 ```bash
 $ brew tap snoopython/macos
-$ brew install macos-trash
+$ brew install trash
 ```
+
+### Download ZIP
+
+You can also download a ZIP and use bin/trash as you like!
 
 ## Requirements
 
-macos-trash is literally a tool for macOS and OS X.
-It depends on system AppleScript and Python (>= 2.7).
+trash is literally a tool for macOS and OS X
+because it depends on system AppleScript and Python (>= 2.7)
+so that things can be *put back* from macOS Trash.
