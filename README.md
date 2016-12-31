@@ -14,7 +14,7 @@ A simple Python tool to move files and/or directories to macOS Trash.
 ### Homebrew
 
 ```bash
-$ brew tap snoopython/macos
+$ brew tap snoopython/formulae
 $ brew install rmsafe
 ```
 
