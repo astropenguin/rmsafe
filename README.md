@@ -1,6 +1,6 @@
 # rmsafe
 
-A simple Python tool to move files and/or directories to macOS Trash.
+Python tool to move files and/or directories to macOS Trash.
 
 ## Usage
 
